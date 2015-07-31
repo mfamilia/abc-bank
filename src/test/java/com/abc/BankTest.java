@@ -18,7 +18,7 @@ public class BankTest {
     }
 
     @Test
-    public void testTotalInterestPaidFromChecking() {
+    public void testTotalInterestPaid() {
         Bank bank = new Bank();
         Account checkingAccount = Account.newInstance(AccountType.CHECKING);
         Customer bill = new Customer("Bill").openAccount(checkingAccount);
@@ -26,28 +26,17 @@ public class BankTest {
 
         checkingAccount.deposit(100.0);
 
-        assertEquals(0.1, bank.totalInterestPaid(), DOUBLE_DELTA);
-    }
+        Account savingsAccount = Account.newInstance(AccountType.SAVINGS);
+        bank.addCustomer(new Customer("Joe").openAccount(savingsAccount));
 
-    @Test
-    public void testTotalInterestPaidFromSavings() {
-        Bank bank = new Bank();
-        Account checkingAccount = Account.newInstance(AccountType.SAVINGS);
-        bank.addCustomer(new Customer("Bill").openAccount(checkingAccount));
+        savingsAccount.deposit(1500.0);
 
-        checkingAccount.deposit(1500.0);
+        Account maxiSavingsAccount = Account.newInstance(AccountType.MAXI_SAVINGS);
+        bank.addCustomer(new Customer("Kate").openAccount(maxiSavingsAccount));
 
-        assertEquals(2.0, bank.totalInterestPaid(), DOUBLE_DELTA);
-    }
+        maxiSavingsAccount.deposit(3000.0);
 
-    @Test
-    public void testTotalInterestPaidFromMaxiSavings() {
-        Bank bank = new Bank();
-        Account checkingAccount = Account.newInstance(AccountType.MAXI_SAVINGS);
-        bank.addCustomer(new Customer("Bill").openAccount(checkingAccount));
 
-        checkingAccount.deposit(3000.0);
-
-        assertEquals(170.0, bank.totalInterestPaid(), DOUBLE_DELTA);
+        assertEquals(172.1, bank.totalInterestPaid(), DOUBLE_DELTA);
     }
 }
