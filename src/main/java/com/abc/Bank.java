@@ -2,6 +2,7 @@ package com.abc;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.abc.utils.StringUtil;
 
 public class Bank {
     private List<Customer> customers;
@@ -16,16 +17,11 @@ public class Bank {
 
     public String customerSummary() {
         String summary = "Customer Summary";
-        for (Customer c : customers)
-            summary += "\n - " + c.getName() + " (" + format(c.getNumberOfAccounts(), "account") + ")";
+        for (Customer c : customers) {
+            String statement = StringUtil.pluralize(c.getNumberOfAccounts(), "account");
+            summary += "\n - " + c.getName() + " (" + statement + ")";
+        }
         return summary;
-    }
-
-    // TODO: Move to string utility
-    //Make sure correct plural of word is created based on the number passed in:
-    //If number passed in is 1 just return the word otherwise add an 's' at the end
-    private String format(int number, String word) {
-        return number + " " + (number == 1 ? word : word + "s");
     }
 
     public double totalInterestPaid() {

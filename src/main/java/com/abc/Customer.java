@@ -2,8 +2,7 @@ package com.abc;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.Math.abs;
+import com.abc.utils.StringUtil;
 
 public class Customer {
     private String name;
@@ -42,7 +41,7 @@ public class Customer {
             statement += "\n" + statementForAccount(a) + "\n";
             total += a.sumTransactions();
         }
-        statement += "\nTotal In All Accounts " + toDollars(total);
+        statement += "\nTotal In All Accounts " + StringUtil.toDollars(total);
         return statement;
     }
 
@@ -50,8 +49,8 @@ public class Customer {
     private String statementForAccount(Account a) {
         String s = "";
 
-       //Translate to pretty account type
-        switch(a.getAccountType()){
+        //Translate to pretty account type
+        switch (a.getAccountType()) {
             case Account.CHECKING:
                 s += "Checking Account\n";
                 break;
@@ -66,15 +65,10 @@ public class Customer {
         //Now total up all the transactions
         double total = 0.0;
         for (Transaction t : a.transactions) {
-            s += "  " + (t.amount < 0 ? "withdrawal" : "deposit") + " " + toDollars(t.amount) + "\n";
+            s += "  " + (t.amount < 0 ? "withdrawal" : "deposit") + " " + StringUtil.toDollars(t.amount) + "\n";
             total += t.amount;
         }
-        s += "Total " + toDollars(total);
+        s += "Total " + StringUtil.toDollars(total);
         return s;
-    }
-
-    // TODO: Move to string utility
-    private String toDollars(double d){
-        return String.format("$%,.2f", abs(d));
     }
 }
