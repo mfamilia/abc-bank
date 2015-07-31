@@ -35,14 +35,18 @@ public class Customer {
     }
 
     public String getStatement() {
-        String statement = "Statement for " + name + "\n";
+        StringBuilder sb = new StringBuilder("Statement for ")
+            .append(name)
+            .append("\n");
+
         double total = 0.0;
-        // TODO: Figure out efficiency of string += and replacement
         for (Account a : accounts) {
-            statement += "\n" + a.getStatement() + "\n";
+            sb.append("\n")
+                .append(a.getStatement())
+                .append("\n");
             total += a.sumTransactions();
         }
-        statement += "\nTotal In All Accounts " + StringUtil.toDollars(total);
-        return statement;
+        sb.append("\nTotal In All Accounts ").append(StringUtil.toDollars(total));
+        return sb.toString();
     }
 }

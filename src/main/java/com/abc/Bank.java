@@ -16,12 +16,15 @@ public class Bank {
     }
 
     public String customerSummary() {
-        String summary = "Customer Summary";
+        StringBuilder sb = new StringBuilder("Customer Summary");
         for (Customer c : customers) {
             String statement = StringUtil.pluralize(c.getNumberOfAccounts(), "account");
-            summary += "\n - " + c.getName() + " (" + statement + ")";
+            sb.append("\n - ")
+                .append(c.getName())
+                .append(" (")
+                .append(statement).append(")");
         }
-        return summary;
+        return sb.toString();
     }
 
     public double totalInterestPaid() {

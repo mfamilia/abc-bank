@@ -1,19 +1,26 @@
 package com.abc;
 
-import com.abc.accounts.Checking;
-import com.abc.accounts.MaxiSavings;
-import com.abc.accounts.Savings;
 import com.abc.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Account {
+    private List<Transaction> transactions;
+
+    private void checkAmount(double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("amount must be greater than zero");
+        }
+    }
+
+    protected abstract String getStatementDescriptor();
+
+    public abstract double interestEarned();
+
     public static Account newInstance(AccountType accountType) {
         return accountType.create();
     }
-
-    private List<Transaction> transactions;
 
     public Account() {
         this.transactions = new ArrayList<Transaction>();
@@ -29,27 +36,19 @@ public abstract class Account {
         transactions.add(new Transaction(-amount));
     }
 
-    private void checkAmount(double amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("amount must be greater than zero");
-        }
-    }
-
-    public abstract double interestEarned();
-
-    protected abstract String getStatementDescriptor();
-
     public String getStatement() {
-        String s = getStatementDescriptor();
+        StringBuilder sb = new StringBuilder(getStatementDescriptor());
 
-        //Now total up all the transactions
         double total = 0.0;
         for (Transaction t : transactions) {
-            s += "  " + (t.amount < 0 ? "withdrawal" : "deposit") + " " + StringUtil.toDollars(t.amount) + "\n";
+            sb.append("  ")
+                .append((t.amount < 0 ? "withdrawal " : "deposit "))
+                .append(StringUtil.toDollars(t.amount))
+                .append("\n");
             total += t.amount;
         }
-        s += "Total " + StringUtil.toDollars(total);
-        return s;
+        sb.append("Total ").append(StringUtil.toDollars(total));
+        return sb.toString();
     }
 
     public double sumTransactions() {

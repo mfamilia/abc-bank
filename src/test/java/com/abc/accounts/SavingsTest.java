@@ -12,25 +12,25 @@ public class SavingsTest {
     private static final double DOUBLE_DELTA = 1e-15;
 
     @Test
-    public void shouldCreateSavingsAccount(){
+    public void testCreateSavingsAccount(){
         Account account = Account.newInstance(AccountType.SAVINGS);
         assertTrue(account instanceof Savings);
     }
 
     @Test(expected=IllegalArgumentException.class)
-    public void shouldThrowExceptionWrongDepositAmount() {
+    public void testThrowExceptionWrongDepositAmount() {
         Account account = Account.newInstance(AccountType.SAVINGS);
         account.deposit(-100);
     }
 
     @Test(expected=IllegalArgumentException.class)
-    public void shouldThrowExceptionWrongWithdrawAmount() {
+    public void testThrowExceptionWrongWithdrawAmount() {
         Account account = Account.newInstance(AccountType.SAVINGS);
         account.withdraw(0);
     }
 
     @Test
-    public void shouldSumTransactions() {
+    public void testSumTransactions() {
         Account account = Account.newInstance(AccountType.SAVINGS);
         account.deposit(100.0);
         assertEquals(100.0, account.sumTransactions(), DOUBLE_DELTA);
@@ -41,7 +41,7 @@ public class SavingsTest {
     }
 
     @Test
-    public void shouldGetStatement() {
+    public void testGetStatement() {
         Account account = Account.newInstance(AccountType.SAVINGS);
         account.deposit(100.0);
         account.withdraw(50.0);
@@ -50,7 +50,7 @@ public class SavingsTest {
     }
 
     @Test
-    public void shouldGetInterestEarned() {
+    public void testGetInterestEarned() {
         Account account = Account.newInstance(AccountType.SAVINGS);
         account.deposit(1000.0);
         assertEquals(1.0, account.interestEarned(), DOUBLE_DELTA);

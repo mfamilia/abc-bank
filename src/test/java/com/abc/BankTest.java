@@ -8,7 +8,7 @@ public class BankTest {
     private static final double DOUBLE_DELTA = 1e-15;
 
     @Test
-    public void customerSummary() {
+    public void testCustomerSummary() {
         Bank bank = new Bank();
         Customer john = new Customer("John");
         john.openAccount(Account.newInstance(AccountType.CHECKING));
@@ -18,7 +18,7 @@ public class BankTest {
     }
 
     @Test
-    public void checkingAccount() {
+    public void testTotalInterestPaidFromChecking() {
         Bank bank = new Bank();
         Account checkingAccount = Account.newInstance(AccountType.CHECKING);
         Customer bill = new Customer("Bill").openAccount(checkingAccount);
@@ -30,7 +30,7 @@ public class BankTest {
     }
 
     @Test
-    public void savings_account() {
+    public void testTotalInterestPaidFromSavings() {
         Bank bank = new Bank();
         Account checkingAccount = Account.newInstance(AccountType.SAVINGS);
         bank.addCustomer(new Customer("Bill").openAccount(checkingAccount));
@@ -41,7 +41,7 @@ public class BankTest {
     }
 
     @Test
-    public void maxi_savings_account() {
+    public void testTotalInterestPaidFromMaxiSavings() {
         Bank bank = new Bank();
         Account checkingAccount = Account.newInstance(AccountType.MAXI_SAVINGS);
         bank.addCustomer(new Customer("Bill").openAccount(checkingAccount));
@@ -50,5 +50,4 @@ public class BankTest {
 
         assertEquals(170.0, bank.totalInterestPaid(), DOUBLE_DELTA);
     }
-
 }
