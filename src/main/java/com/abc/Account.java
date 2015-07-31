@@ -8,27 +8,6 @@ import com.abc.utils.StringUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-enum AccountType {
-    CHECKING {
-        public Account create() {
-            return new Checking();
-        }
-    },
-    SAVINGS {
-        public Account create() {
-            return new Savings();
-        }
-    },
-    MAXI_SAVINGS {
-        public Account create() {
-            return new MaxiSavings();
-        }
-    };
-    public Account create() {
-        return null;
-    }
-}
-
 public abstract class Account {
     public static Account newInstance(AccountType accountType) {
         return accountType.create();
