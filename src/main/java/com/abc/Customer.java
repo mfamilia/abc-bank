@@ -35,9 +35,7 @@ public class Customer {
     }
 
     public String getStatement() {
-        // TODO: Consolidate declaration and assignment
-        String statement = null;
-        statement = "Statement for " + name + "\n";
+        String statement = "Statement for " + name + "\n";
         double total = 0.0;
         // TODO: Figure out efficiency of string += and replacement
         for (Account a : accounts) {

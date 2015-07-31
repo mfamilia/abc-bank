@@ -10,6 +10,8 @@ public class Account {
     public static final int MAXI_SAVINGS = 2;
 
     private final int accountType;
+
+    // TODO: This should probably not be public
     public List<Transaction> transactions;
 
     public Account(int accountType) {
@@ -43,10 +45,6 @@ public class Account {
                     return amount * 0.001;
                 else
                     return 1 + (amount-1000) * 0.002;
-// TODO: Remove this
-//            case SUPER_SAVINGS:
-//                if (amount <= 4000)
-//                    return 20;
             case MAXI_SAVINGS:
                 if (amount <= 1000)
                     return amount * 0.02;
