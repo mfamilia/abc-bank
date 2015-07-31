@@ -35,9 +35,11 @@ public class Customer {
     }
 
     public String getStatement() {
+        // TODO: Consolidate declaration and assignment
         String statement = null;
         statement = "Statement for " + name + "\n";
         double total = 0.0;
+        // TODO: Figure out efficiency of string += and replacement
         for (Account a : accounts) {
             statement += "\n" + statementForAccount(a) + "\n";
             total += a.sumTransactions();
@@ -46,6 +48,7 @@ public class Customer {
         return statement;
     }
 
+    // TODO: Use sub types, move this to account
     private String statementForAccount(Account a) {
         String s = "";
 
@@ -72,6 +75,7 @@ public class Customer {
         return s;
     }
 
+    // TODO: Move to string utility
     private String toDollars(double d){
         return String.format("$%,.2f", abs(d));
     }

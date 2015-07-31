@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Account {
-
+    // TODO: Refactor to sub classes
     public static final int CHECKING = 0;
     public static final int SAVINGS = 1;
     public static final int MAXI_SAVINGS = 2;
@@ -17,6 +17,7 @@ public class Account {
         this.transactions = new ArrayList<Transaction>();
     }
 
+    // TODO: Dry out amount validation
     public void deposit(double amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("amount must be greater than zero");
@@ -25,13 +26,14 @@ public class Account {
         }
     }
 
-public void withdraw(double amount) {
-    if (amount <= 0) {
-        throw new IllegalArgumentException("amount must be greater than zero");
-    } else {
-        transactions.add(new Transaction(-amount));
+    // TODO: Figure out if withdraw is allowed is not enough funds
+    public void withdraw(double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("amount must be greater than zero");
+        } else {
+            transactions.add(new Transaction(-amount));
+        }
     }
-}
 
     public double interestEarned() {
         double amount = sumTransactions();
@@ -41,6 +43,7 @@ public void withdraw(double amount) {
                     return amount * 0.001;
                 else
                     return 1 + (amount-1000) * 0.002;
+// TODO: Remove this
 //            case SUPER_SAVINGS:
 //                if (amount <= 4000)
 //                    return 20;
@@ -59,6 +62,7 @@ public void withdraw(double amount) {
        return checkIfTransactionsExist(true);
     }
 
+    // TODO: Remove unused parameter
     private double checkIfTransactionsExist(boolean checkAll) {
         double amount = 0.0;
         for (Transaction t: transactions)
