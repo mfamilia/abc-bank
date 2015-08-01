@@ -2,20 +2,20 @@ package com.abc.accounts;
 
 import com.abc.Account;
 import com.abc.AccountType;
-
 import com.abc.utils.DateProvider;
+import mockit.Mock;
+import mockit.MockUp;
+import mockit.integration.junit4.JMockit;
 import org.junit.Test;
-import org.mockito.Mockito;
+import org.junit.runner.RunWith;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.spi.CalendarDataProvider;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+@RunWith(JMockit.class)
 public class MaxiSavingsTest {
     private static final double DOUBLE_DELTA = 1e-15;
 
@@ -73,16 +73,20 @@ public class MaxiSavingsTest {
     }
 
     @Test
-    public void testGetInterestEarnedWithNoRecentWithdrawal() throws ParseException {
+    public void testGetInterestEarnedWithNoRecentWithdrawal() {
+        new MockUp<DateProvider>() {
+            @Mock
+            public Date now()
+            {
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DATE, -11);
+                return calendar.getTime();
+            }
+        };
+
         Account account = Account.newInstance(AccountType.MAXI_SAVINGS);
-        final DateProvider provider = Mockito.mock(DateProvider.class);
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -11);
-        Mockito.when(provider.now()).thenReturn(calendar.getTime());
         account.deposit(11000.0);
-        Mockito.when(provider.now()).thenReturn(calendar.getTime());
         account.withdraw(1000.0);
-        assertEquals("", calendar.getTime().toString());
         assertEquals(500.0, account.interestEarned(), DOUBLE_DELTA);
     }
 }

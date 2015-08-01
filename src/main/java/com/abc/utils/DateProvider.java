@@ -17,9 +17,9 @@ public class DateProvider {
         return Calendar.getInstance().getTime();
     }
 
-    public Date daysLater(int days) {
+    public Date offsetFromNow(int days) {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -days);
+        calendar.add(Calendar.DATE, days);
         return calendar.getTime();
     }
 }

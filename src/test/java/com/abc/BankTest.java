@@ -42,6 +42,6 @@ public class BankTest {
         maxiSavingsAccount.deposit(3000.0);
 
 
-        assertEquals(172.1, bank.totalInterestPaid(), DOUBLE_DELTA);
+        assertEquals(152.1, bank.totalInterestPaid(), DOUBLE_DELTA);
     }
 }

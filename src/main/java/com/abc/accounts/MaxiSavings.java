@@ -7,6 +7,8 @@ import com.abc.utils.DateProvider;
 import java.util.Date;
 
 public class MaxiSavings extends Account {
+    public static final int RECENT_WITHDRAW_OFFSET = -10;
+
     public double interestEarned() {
         double amount = sumTransactions();
         if (hasRecentWithdrawal()) {
@@ -20,9 +22,8 @@ public class MaxiSavings extends Account {
     }
 
     protected boolean hasRecentWithdrawal() {
-        Date safeWithdrawDate = DateProvider.getInstance().daysLater(10);
+        Date safeWithdrawDate = DateProvider.getInstance().offsetFromNow(RECENT_WITHDRAW_OFFSET);
         for (Transaction t: transactions) {
-            System.out.println(t.date.toString());
             if(t.isDebit() && t.date.after(safeWithdrawDate)) {
                 return true;
             }
