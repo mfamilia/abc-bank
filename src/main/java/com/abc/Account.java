@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Account {
-    private List<Transaction> transactions;
+    protected List<Transaction> transactions;
 
-    private void checkAmount(double amount) {
+    public static void validateAmount(double amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("amount must be greater than zero");
         }
     }
 
-    protected abstract String getStatementDescriptor();
+    protected abstract String statementHeader();
 
     public abstract double interestEarned();
 
@@ -27,17 +27,17 @@ public abstract class Account {
     }
 
     public void deposit(double amount) {
-        checkAmount(amount);
+        validateAmount(amount);
         transactions.add(new Transaction(amount));
     }
 
     public void withdraw(double amount) {
-        checkAmount(amount);
+        validateAmount(amount);
         transactions.add(new Transaction(-amount));
     }
 
-    public String getStatement() {
-        StringBuilder sb = new StringBuilder(getStatementDescriptor());
+    public String statement() {
+        StringBuilder sb = new StringBuilder(statementHeader());
 
         double total = 0.0;
         for (Transaction t : transactions) {
@@ -53,8 +53,9 @@ public abstract class Account {
 
     public double sumTransactions() {
         double amount = 0.0;
-        for (Transaction t: transactions)
+        for (Transaction t: transactions) {
             amount += t.amount;
+        }
         return amount;
     }
 }

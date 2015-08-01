@@ -8,7 +8,7 @@ public class Checking extends Account {
         return amount * 0.001;
     }
 
-    protected String getStatementDescriptor() {
+    protected String statementHeader() {
         return "Checking Account\n";
     }
 }

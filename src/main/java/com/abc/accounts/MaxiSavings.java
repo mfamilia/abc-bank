@@ -1,18 +1,32 @@
 package com.abc.accounts;
 
 import com.abc.Account;
+import com.abc.Transaction;
+import com.abc.utils.DateProvider;
+
+import java.util.Date;
 
 public class MaxiSavings extends Account {
     public double interestEarned() {
         double amount = sumTransactions();
-        if (amount <= 1000)
-            return amount * 0.02;
-        if (amount <= 2000)
-            return 20 + (amount - 1000) * 0.05;
-        return 70 + (amount - 2000) * 0.1;
+        if (hasRecentWithdrawal()) {
+            return amount * 0.001;
+        }
+        return amount * 0.05;
     }
 
-    protected String getStatementDescriptor() {
+    protected String statementHeader() {
         return "Maxi Savings Account\n";
+    }
+
+    protected boolean hasRecentWithdrawal() {
+        Date safeWithdrawDate = DateProvider.getInstance().daysLater(10);
+        for (Transaction t: transactions) {
+            System.out.println(t.date.toString());
+            if(t.isDebit() && t.date.after(safeWithdrawDate)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

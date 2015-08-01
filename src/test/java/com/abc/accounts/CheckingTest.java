@@ -46,7 +46,7 @@ public class CheckingTest {
         account.deposit(100.0);
         account.withdraw(50.0);
         assertEquals("Checking Account\n  deposit $100.00\n" +
-                "  withdrawal $50.00\nTotal $50.00", account.getStatement());
+                "  withdrawal $50.00\nTotal $50.00", account.statement());
     }
 
     @Test

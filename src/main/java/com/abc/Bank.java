@@ -18,9 +18,9 @@ public class Bank {
     public String customerSummary() {
         StringBuilder sb = new StringBuilder("Customer Summary");
         for (Customer c : customers) {
-            String statement = StringUtil.pluralize(c.getNumberOfAccounts(), "account");
+            String statement = StringUtil.quantityFormat(c.getNumberOfAccounts(), "account");
             sb.append("\n - ")
-                .append(c.getName())
+                .append(c.name)
                 .append(" (")
                 .append(statement).append(")");
         }
@@ -29,8 +29,9 @@ public class Bank {
 
     public double totalInterestPaid() {
         double total = 0;
-        for(Customer c: customers)
+        for(Customer c: customers) {
             total += c.totalInterestEarned();
+        }
         return total;
     }
 }

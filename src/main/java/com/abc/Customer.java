@@ -6,16 +6,12 @@ import java.util.List;
 import com.abc.utils.StringUtil;
 
 public class Customer {
-    private String name;
+    public final String name;
     private List<Account> accounts;
 
     public Customer(String name) {
         this.name = name;
         this.accounts = new ArrayList<Account>();
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Customer openAccount(Account account) {
@@ -29,12 +25,13 @@ public class Customer {
 
     public double totalInterestEarned() {
         double total = 0;
-        for (Account a : accounts)
+        for (Account a : accounts) {
             total += a.interestEarned();
+        }
         return total;
     }
 
-    public String getStatement() {
+    public String statement() {
         StringBuilder sb = new StringBuilder("Statement for ")
             .append(name)
             .append("\n");
@@ -42,11 +39,17 @@ public class Customer {
         double total = 0.0;
         for (Account a : accounts) {
             sb.append("\n")
-                .append(a.getStatement())
+                .append(a.statement())
                 .append("\n");
             total += a.sumTransactions();
         }
         sb.append("\nTotal In All Accounts ").append(StringUtil.toDollars(total));
         return sb.toString();
+    }
+
+    public void transfer(double amount, Account fromAccount, Account toAccount) {
+        Account.validateAmount(amount);
+        fromAccount.withdraw(amount);
+        toAccount.deposit(amount);
     }
 }
